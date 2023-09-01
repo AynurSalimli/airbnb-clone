@@ -1,3 +1,7 @@
+'use client'
+import React, { useEffect, useCallback, useState } from "react";
+
+
 interface ModalProps {
     isOpen?: boolean;
     onClose: () => void;
@@ -25,6 +29,29 @@ const Modal: React.FC<ModalProps> = ({
     secondaryAction
 
 }) => {
+    const [showModal, setShowModal] = useState(false);
+
+    useEffect(() => {
+        setShowModal(isOpen);
+    }, [isOpen]);
+
+    const handleClose = useCallback(() => {
+        if (disabled) {
+            return;
+        }
+        setShowModal(false);
+        setTimeout(() => {
+            onClose()
+        }, 300)
+    }, [disabled, onClose]);
+
+    const handleSubmit = useCallback(()=>{
+        if(disabled){
+            return;
+        }
+        onSubmit()
+    },[disabled, onSubmit])
+
     return (
         <div></div>
     )
